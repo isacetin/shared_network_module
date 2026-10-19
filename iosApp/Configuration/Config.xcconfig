@@ -1,0 +1,7 @@
+TEAM_ID=
+
+PRODUCT_NAME=Shared_network_module
+PRODUCT_BUNDLE_IDENTIFIER=com.isacetin.shared_network_module.Shared_network_module$(TEAM_ID)
+
+CURRENT_PROJECT_VERSION=1
+MARKETING_VERSION=1.0

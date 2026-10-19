@@ -1,0 +1,52 @@
+name: Release XCFramework
+
+# "v1.0.0" gibi bir tag push'landığında:
+# XCFramework'ü üretir, zip'ler, Package.swift'i yeni url + checksum ile günceller,
+# tag'i bu commit'e taşır ve zip'i GitHub Release'e yükler.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  xcframework:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: XCFramework üret
+        run: ./gradlew :sharedLogic:assembleSharedNetworkReleaseXCFramework
+
+      - name: Zip'le
+        run: |
+          cd sharedLogic/build/XCFrameworks/release
+          zip -r -y "$GITHUB_WORKSPACE/SharedNetwork.xcframework.zip" SharedNetwork.xcframework
+
+      - name: Package.swift'i güncelle
+        run: |
+          CHECKSUM=$(shasum -a 256 SharedNetwork.xcframework.zip | cut -d ' ' -f 1)
+          URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/SharedNetwork.xcframework.zip"
+          sed -i '' -E "s|url: \".*\"|url: \"${URL}\"|; s|checksum: \".*\"|checksum: \"${CHECKSUM}\"|" Package.swift
+          cat Package.swift
+
+      - name: Tag'i güncel Package.swift'e taşı
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Package.swift: ${GITHUB_REF_NAME}"
+          git tag -f "${GITHUB_REF_NAME}"
+          git push -f origin "refs/tags/${GITHUB_REF_NAME}"
+
+      - name: Release oluştur
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" SharedNetwork.xcframework.zip --title "${GITHUB_REF_NAME}" --generate-notes
