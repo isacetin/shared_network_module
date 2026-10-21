@@ -15,12 +15,12 @@ group = System.getenv("GROUP")?.let { "$it.${System.getenv("ARTIFACT")}" }
 version = System.getenv("VERSION") ?: "1.0.0-SNAPSHOT"
 
 kotlin {
-    // Kütüphaneyi kullanan projeler Kotlin 2.2+ ile okuyabilsin diye 2.3 seviyesinde derliyoruz
-    // (Ktor zaten stdlib 2.3 istiyor, daha aşağısı mümkün değil).
-    coreLibrariesVersion = "2.3.21"
+    // Kütüphaneyi kullanan projeler Kotlin 2.2 ile (kapt/Dagger gibi metadata okuyan araçlar dahil)
+    // sorunsuz derlensin diye 2.2 seviyesinde derliyoruz ve stdlib 2.2 istiyoruz.
+    coreLibrariesVersion = "2.2.21"
     compilerOptions {
-        languageVersion = KotlinVersion.KOTLIN_2_3
-        apiVersion = KotlinVersion.KOTLIN_2_3
+        languageVersion = KotlinVersion.KOTLIN_2_2
+        apiVersion = KotlinVersion.KOTLIN_2_2
     }
 
     val xcf = XCFramework("SharedNetwork")

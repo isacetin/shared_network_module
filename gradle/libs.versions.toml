@@ -14,8 +14,9 @@ junit = "4.13.2"
 kotlin = "2.4.20"
 # Yayınlanan kütüphane (sharedLogic): AAR, kullanan projelerden en az bu compileSdk'yı ister.
 sharedLogic-compileSdk = "36"
-kotlinx-coroutines = "1.11.0"
-ktor = "3.5.2"
+kotlinx-coroutines = "1.10.2"
+# Ktor 3.4+ stdlib 2.3 istiyor; kullanan projelerin Kotlin 2.2 araçlarıyla (kapt/Dagger) uyumu için 3.3.x.
+ktor = "3.3.3"
 material3 = "1.12.0-alpha03"
 
 [libraries]
