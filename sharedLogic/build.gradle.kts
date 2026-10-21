@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
@@ -14,6 +15,14 @@ group = System.getenv("GROUP")?.let { "$it.${System.getenv("ARTIFACT")}" }
 version = System.getenv("VERSION") ?: "1.0.0-SNAPSHOT"
 
 kotlin {
+    // Kütüphaneyi kullanan projeler Kotlin 2.2+ ile okuyabilsin diye 2.3 seviyesinde derliyoruz
+    // (Ktor zaten stdlib 2.3 istiyor, daha aşağısı mümkün değil).
+    coreLibrariesVersion = "2.3.21"
+    compilerOptions {
+        languageVersion = KotlinVersion.KOTLIN_2_3
+        apiVersion = KotlinVersion.KOTLIN_2_3
+    }
+
     val xcf = XCFramework("SharedNetwork")
     listOf(
         iosArm64(),
@@ -28,7 +37,7 @@ kotlin {
     
     android {
        namespace = "com.isacetin.shared_network_module.sharedLogic"
-       compileSdk = libs.versions.android.compileSdk.get().toInt()
+       compileSdk = libs.versions.sharedLogic.compileSdk.get().toInt()
        minSdk = libs.versions.android.minSdk.get().toInt()
     
        compilerOptions {

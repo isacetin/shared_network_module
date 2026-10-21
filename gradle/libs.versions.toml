@@ -1,6 +1,6 @@
 [versions]
 agp = "9.1.1"
-android-compileSdk = "36"
+android-compileSdk = "37"
 android-minSdk = "24"
 android-targetSdk = "37"
 androidx-activity = "1.13.0"
@@ -12,8 +12,10 @@ androidx-testExt = "1.3.0"
 composeMultiplatform = "1.12.1"
 junit = "4.13.2"
 kotlin = "2.4.20"
+# Yayınlanan kütüphane (sharedLogic): AAR, kullanan projelerden en az bu compileSdk'yı ister.
+sharedLogic-compileSdk = "36"
 kotlinx-coroutines = "1.11.0"
-ktor = "3.6.0"
+ktor = "3.5.2"
 material3 = "1.12.0-alpha03"
 
 [libraries]
