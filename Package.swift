@@ -11,8 +11,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "SharedNetwork",
-            url: "https://github.com/isacetin/shared_network_module/releases/download/v0.0.0/SharedNetwork.xcframework.zip",
-            checksum: "0000000000000000000000000000000000000000000000000000000000000000"
+            url: "https://github.com/isacetin/shared_network_module/releases/download/v1.0.1/SharedNetwork.xcframework.zip",
+            checksum: "f1fff26248d65f4658e9b0abdcab4a020d6378569d9edb9b058e301f6045f368"
         ),
     ]
 )
